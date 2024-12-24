@@ -42,11 +42,12 @@ model Project {
 }
 
 model ProjectTeam {
-  id        Int     @id @default(autoincrement())
+  id        Int @id @default(autoincrement())
   teamId    Int
   projectId Int
-  team      Team    @relation(fields: [teamId], references: [id])
-  project   Project @relation(fields: [projectId], references: [id])
+
+  team    Team    @relation(fields: [teamId], references: [id])
+  project Project @relation(fields: [projectId], references: [id])
 }
 
 model Task {
