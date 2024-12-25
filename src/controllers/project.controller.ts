@@ -27,4 +27,4 @@ export const createProject = async (req: Request, res: Response): Promise<void> 
     } catch (error: any) {
         res.status(500).json({ message: `An error occurred while creating project, Error: ${error}` });
     }
-}
+};
