@@ -79,3 +79,29 @@ export const updateTaskStatus = async (req: Request, res: Response): Promise<voi
         res.status(500).json({ message: `An error occurred while updating task, Error: ${error}` });
     }
 };
+
+
+export const getUserTasks = async (req: Request, res: Response): Promise<void> => {
+    const { userId } = req.params;
+    try {
+        const tasks = await prisma.task.findMany({
+            where: {
+                OR: [
+                    {
+                        authorUserId: Number(userId)
+                    },
+                    {
+                        assignedUserId: Number(userId)
+                    }
+                ]
+            },
+            include: {
+                assignee: true,
+                author: true,
+            },
+        });
+        res.json(tasks);
+    } catch (error: any) {
+        res.status(500).json({ message: `An error occurred while fetching user's tasks, Error: ${error}` });
+    }
+};

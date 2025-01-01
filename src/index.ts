@@ -8,6 +8,7 @@ import projectRouter from './routes/project.routes';
 import taskRouter from './routes/task.routes';
 import searchRouter from './routes/search.routes';
 import userRouter from './routes/user.routes';
+import teamRouter from './routes/teams.routes';
 
 
 dotenv.config();
@@ -28,6 +29,7 @@ app.use('/api/projects', projectRouter);
 app.use('/api/tasks', taskRouter);
 app.use('/api/search', searchRouter);
 app.use('/api/users', userRouter);
+app.use('/api/teams', teamRouter);
 
 const port = process.env.PORT || 5001;
 
