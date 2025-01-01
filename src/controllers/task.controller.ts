@@ -1,5 +1,5 @@
+import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
-import { PrismaClient, Task } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -57,5 +57,25 @@ export const createTask = async (req: Request, res: Response): Promise<void> => 
         res.status(201).json(newTask);
     } catch (error: any) {
         res.status(500).json({ message: `An error occurred while creating Task, Error: ${error}` });
+    }
+};
+
+
+
+export const updateTaskStatus = async (req: Request, res: Response): Promise<void> => {
+    const { taskId } = req.params;
+    const { status } = req.body;
+    try {
+        const updatedTask = await prisma.task.update({
+            where: {
+                id: Number(taskId),
+            },
+            data: {
+                status,
+            }
+        });
+        res.json(updatedTask);
+    } catch (error: any) {
+        res.status(500).json({ message: `An error occurred while updating task, Error: ${error}` });
     }
 };

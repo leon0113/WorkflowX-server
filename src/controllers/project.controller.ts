@@ -12,6 +12,26 @@ export const getProjects = async (req: Request, res: Response): Promise<void> =>
     }
 }
 
+export const getSingleProject = async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.params;
+    try {
+        const project = await prisma.project.findUnique({
+            where: {
+                id: parseInt(id, 10),
+            },
+        });
+
+        if (!project) {
+            res.status(404).json({ message: "Project not found" });
+            return;
+        }
+
+        res.json(project);
+    } catch (error: any) {
+        res.status(500).json({ message: `An error occurred while fetching projects, Error: ${error}` });
+    }
+}
+
 export const createProject = async (req: Request, res: Response): Promise<void> => {
     const { name, description, startDate, endDate } = req.body;
     try {
